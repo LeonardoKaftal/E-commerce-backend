@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: ecommerce-db
+    image: 'postgres:16.0'
+    environment:
+      - 'POSTGRES_DB=ecommerce-db'
+      - 'POSTGRES_PASSWORD=1'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
+    networks:
+      - postgres
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+
+

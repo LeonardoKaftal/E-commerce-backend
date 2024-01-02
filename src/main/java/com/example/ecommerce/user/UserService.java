@@ -1,7 +1,9 @@
-package com.example.ecommerce.User;
+package com.example.ecommerce.user;
 
 import com.example.ecommerce.dto.RegisterRequest;
 import com.example.ecommerce.exception.UsernameOrEmailAlreadyTakenException;
+import com.example.ecommerce.security.MyPasswordEncoder;
+import com.example.ecommerce.security.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,11 +17,12 @@ import java.time.LocalDate;
 public class UserService implements UserDetailsService {
 
     private final AppUserRepository appUserRepository;
+    private final MyPasswordEncoder passwordEncoder;
 
     @Override
-    public AppUser loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        return appUserRepository.findAppUserByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException("Username " + username + " has not been found"));
+    public AppUser loadUserByUsername(@NonNull String email) throws UsernameNotFoundException {
+        return appUserRepository.findAppUserByEmail(email)
+                .orElseThrow(()-> new UsernameNotFoundException("Email " + email + " has not been found"));
     }
 
     public AppUser registerUser(@NonNull RegisterRequest registerRequest) {
@@ -35,9 +38,11 @@ public class UserService implements UserDetailsService {
         AppUser appUser = AppUser
                 .builder()
                 .email(registerRequest.email())
-                .password(registerRequest.password())
+                .password(passwordEncoder.encode(registerRequest.password()))
                 .username(registerRequest.username())
                 .accountCreationTime(LocalDate.now())
+                .role(Role.USER)
+                .isEnabled(true)
                 .build();
 
         return appUserRepository.save(appUser);

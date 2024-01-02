@@ -1,4 +1,4 @@
-package com.example.ecommerce.User;
+package com.example.ecommerce.user;
 
 import com.example.ecommerce.dto.RegisterRequest;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,6 @@ public class UserController {
         return ResponseEntity.ok(userService.loadUserByUsername(username));
     }
 
-    @PostMapping()
     public ResponseEntity<AppUser> registerUser(RegisterRequest registerRequest) {
         return ResponseEntity.ok(userService.registerUser(registerRequest));
     }

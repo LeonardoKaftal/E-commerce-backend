@@ -1,8 +1,5 @@
 package com.example.ecommerce.user;
 
-import com.example.ecommerce.User.AppUser;
-import com.example.ecommerce.User.UserController;
-import com.example.ecommerce.User.UserService;
 import com.example.ecommerce.dto.RegisterRequest;
 import com.example.ecommerce.exception.UsernameOrEmailAlreadyTakenException;
 import org.junit.jupiter.api.Test;
@@ -10,9 +7,6 @@ import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.time.LocalDate;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
